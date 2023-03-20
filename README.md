@@ -60,8 +60,7 @@ Content-Type: application/json;charset=UTF-8
     },
     "status": "OK",
     "message": null
-}
-</code></pre>
+}</code></pre>
 ___
 ### Description
 많이 검색된 순서대로 최대 10개의 검색어를 반환합니다.
@@ -110,5 +109,4 @@ Content-Type: application/json;charset=UTF-8
     }
   ],
   "message": "success"
-}
-</code></pre>
+}</code></pre>
