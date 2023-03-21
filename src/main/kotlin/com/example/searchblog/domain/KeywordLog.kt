@@ -8,7 +8,7 @@ import jakarta.persistence.Entity
 import java.time.LocalDateTime
 
 @Entity(name = "Keyword")
-data class Keyword(
+data class KeywordLog(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
