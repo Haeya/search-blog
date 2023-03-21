@@ -1,8 +1,7 @@
 package com.example.searchblog.controller
 
 import com.example.searchblog.service.KeywordService
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -10,18 +9,24 @@ import org.springframework.web.bind.annotation.*
 class KeywordController (
     private val keywordService: KeywordService,
 ) {
-    val logger: Logger = LoggerFactory.getLogger(KeywordController::class.java)
     /**
      * 인기 검색어 목록
-     * @return List<Map<String, Any>>
+     * @return ResponseEntity<Map<String, Any>>
      */
     @GetMapping
-    fun getKeywords(): Map<String, List<Map<String, Any>>> {
+    fun getKeywords(
+        @RequestParam(required = false, defaultValue = "10") size: Int,
+    ): ResponseEntity<Map<String, Any>> {
+        if (size !in 1 .. 10)
+            throw IllegalArgumentException(
+                "size 값은 1 ~ 10 사이여야 합니다. size: $size"
+            )
         val keywordMap = keywordService.countKeyword()
         val outputList = keywordMap
             .map { (keyword, count) -> mapOf("keyword" to keyword, "count" to count) }
             .sortedByDescending { it["count"] as Int}
-            .take(10)
-        return mapOf("popularKeywords" to outputList)
+            .take(size)
+        val result = mapOf("data" to outputList, "message" to "success")
+        return ResponseEntity.ok(result)
     }
 }

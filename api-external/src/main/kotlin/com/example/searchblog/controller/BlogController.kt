@@ -28,6 +28,7 @@ class BlogController(
     ): ResponseEntity<*> {
         val blogs = blogService.getBlogs(query, page, size, sort)
         keywordService.saveKeyword(query)
-        return ResponseEntity.ok(blogs)
+        val result = mapOf("data" to blogs, "message" to "success")
+        return ResponseEntity.ok(result)
     }
 }
