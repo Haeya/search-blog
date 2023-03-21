@@ -18,6 +18,11 @@ class BlogService (
 
     fun getBlogs(query: String, page: Int, size: Int, sort: String) : Any? {
         try {
+            if (page !in 1 .. 50 || size !in 1 .. 50)
+                throw IllegalArgumentException(
+                    "page 혹은 size 값은 1 ~ 50 사이여야 합니다. page: $page, size: $size"
+                )
+
             val headers = HttpHeaders()
             headers.add("Authorization", "KakaoAK $kakaoApiKey")
             val httpEntity = HttpEntity<String>("parameters", headers)
@@ -27,7 +32,7 @@ class BlogService (
                 httpEntity,
                 Any::class.java
             )
-            if (response.statusCode == HttpStatus.OK)
+            if (response.statusCode != HttpStatus.OK)
                 response = getNaverBlogs(query, page, size, sort)
             return response.body
         } catch (e: Exception) {
