@@ -26,7 +26,6 @@ allprojects{
         mavenCentral()
     }
 }
-
 subprojects{
     apply(plugin = "org.jetbrains.kotlin.jvm")
     apply(plugin = "org.jetbrains.kotlin.plugin.jpa")
@@ -47,6 +46,4 @@ subprojects{
         testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
         testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     }
-
 }
-
